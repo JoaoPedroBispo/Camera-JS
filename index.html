@@ -1,71 +1,64 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Projeto de Câmera</title>
-    <style>
-      #camera {
-        width: 500px;
-        height: 375px;
-        border: 1px solid black;
-        position: relative;
-        overflow: hidden;
-      }
+<html lang="en">
 
-      #camera video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Camera</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
 
-      #camera button {
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 10px 20px;
-        background-color: #1752f3;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-      <div id="camera">
-        <video id="video" autoplay></video>
-        <button id="captureButton">Capturar</button>
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-four-fifths">
+          <h1 class="title">
+            Camera JavaScript
+          </h1>
+          <video autoplay id="video"></video>
+          <button class="button is-hidden" id="btnPlay">
+            <span class="icon is-small">
+              <i class="fas fa-play"></i>
+            </span>
+          </button>
+          <button class="button" id="btnPause">
+            <span class="icon is-small">
+              <i class="fas fa-pause"></i>
+            </span>
+          </button>
+          <button class="button is-info" id="btnScreenshot">
+            <span class="icon is-small">
+              <i class="fas fa-camera"></i>
+            </span>
+          </button>
+          <button class="button" id="btnChangeCamera">
+            <span class="icon">
+              <i class="fas fa-sync-alt"></i>
+            </span>
+            <span>Mudar camera</span>
+          </button>
+        </div>
+        <div class="column">
+          <h2 class="title">Fotos</h2>
+          <div id="screenshots"></div>
+        </div>
       </div>
+    </div>
+  </section>
 
-    <script>
-      // Acessa a câmera e exibe o vídeo na tag <video>
-      navigator.mediaDevices
-        .getUserMedia({ video: true })
-        .then(function (stream) {
-          var video = document.getElementById("video");
-          video.srcObject = stream;
-          video.play();
-        })
-        .catch(function (error) {
-          console.log("Erro ao acessar a câmera: ", error);
-        });
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        Feito por <a href="https://github.com/JoaoPedroBispo">João Pedro Bispo</a> e <a href="https://github.com/GuiMartos"> Guilherme Martos</a> | <a
+          href="https://github.com/JoaoPedroBispo/Camera-JS">Código fonte</a>
+      </p>
+    </div>
+  </footer>
 
-      // Captura a imagem do vídeo quando o botão é clicado
-      var captureButton = document.getElementById("captureButton");
-      captureButton.addEventListener("click", function () {
-        var video = document.getElementById("video");
-        var canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        var context = canvas.getContext("2d");
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        var image = canvas.toDataURL("image/png");
+  <canvas class="is-hidden" id="canvas"></canvas>
+  <script src="script.js"></script>
+</body>
 
-        // Exibe a imagem capturada
-        var imgElement = document.createElement("img");
-        imgElement.src = image;
-        document.body.appendChild(imgElement);
-      });
-    </script>
-  </body>
 </html>

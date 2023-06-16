@@ -92,37 +92,6 @@
         alert("Não foi possível acessar a câmera");
       }
     }
-
-    function ativarFlash() {
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-          .then(function(stream) {
-            var track = stream.getVideoTracks()[0];
-            var imageCapture = new imageCapture(track);
-            var photoSettings = {
-              fillLightMode: 'flash',
-            };
-
-            imageCapture.getPhotoCapabilities()
-              .then(function(photoCapabilities) {
-                if (photoCapabilities.fillLightMode.includes('flash')) {
-                  return imageCapture.applyPhotoSettings(photoSettings);
-                }
-              })
-              .catch(function(error) {
-                console.error('Erro ao configurar o flash de câmera:', error);
-              });
-          })
-          .catch(function(error) {
-            console.error('Erro ao acessar a câmera:', error);
-          });
-      } else {
-        console.error('O navegador não suporta o flash de câmera.');
-      }
-    }
-
-    var flashButton = document.getElementById('flashButton');
-    flashButton.addEventListener('click', ativarFlash);
   
     initializeCamera();
   })();
